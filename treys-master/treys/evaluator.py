@@ -3,6 +3,7 @@ from .card import Card
 from .deck import Deck
 from .lookup import LookupTable
 
+
 class Evaluator(object):
     """
     Evaluates hand strengths using a variant of Cactus Kev's algorithm:
@@ -17,7 +18,7 @@ class Evaluator(object):
     def __init__(self):
 
         self.table = LookupTable()
-        
+
         self.hand_size_map = {
             5: self._five,
             6: self._six,
@@ -80,7 +81,7 @@ class Evaluator(object):
 
         all5cardcombobs = itertools.combinations(cards, 5)
         for combo in all5cardcombobs:
-            
+
             score = self._five(combo)
             if score < minimum:
                 minimum = score
@@ -142,8 +143,8 @@ class Evaluator(object):
 
         for i in range(len(stages)):
             line = "=" * line_length
-            print("{} {} {}".format(line,stages[i],line))
-            
+            print("{} {} {}".format(line, stages[i], line))
+
             best_rank = 7463  # rank one worse than worst hand
             winners = []
             for player, hand in enumerate(hands):
@@ -153,7 +154,8 @@ class Evaluator(object):
                 rank_class = self.get_rank_class(rank)
                 class_string = self.class_to_string(rank_class)
                 percentage = 1.0 - self.get_five_card_rank_percentage(rank)  # higher better here
-                print("Player {} hand = {}, percentage rank among all hands = {}".format(player + 1, class_string, percentage))
+                print("Player {} hand = {}, percentage rank among all hands = {}".format(player + 1, class_string,
+                                                                                         percentage))
 
                 # detect winner
                 if rank == best_rank:
@@ -178,4 +180,4 @@ class Evaluator(object):
                 if len(winners) == 1:
                     print("Player {} is the winner with a {}\n".format(winners[0] + 1, hand_result))
                 else:
-                    print("Players {} tied for the win with a {}\n".format([x + 1 for x in winners],hand_result))
+                    print("Players {} tied for the win with a {}\n".format([x + 1 for x in winners], hand_result))
